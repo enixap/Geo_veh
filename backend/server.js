@@ -1,13 +1,20 @@
 const { loadEnv } = require("./config/env");
-const { createApp } = require("./app");
+loadEnv(); // ← DOIT être avant tout le reste !
 
-loadEnv();
+const { createApp } = require("./app");
+const { pool } = require("./config/db");
 
 const app = createApp();
 const port = Number(process.env.PORT || 4000);
 
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`API démarrée sur http://localhost:${port}`);
-});
-
+pool.query("SELECT 1")
+  .then(() => {
+    console.log("✅ Base de données connectée !");
+    app.listen(port, () => {
+      console.log(`🚀 API démarrée sur http://localhost:${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error("❌ Impossible de se connecter à la DB :", err.message);
+    process.exit(1);
+  });

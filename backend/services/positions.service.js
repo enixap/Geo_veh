@@ -36,5 +36,14 @@ async function historyByVehicle(vehicle_id, { from, to, limit }) {
   return positionsModel.historyByVehicle(vehicle_id, { from, to, limit });
 }
 
-module.exports = { record, latestByVehicle, historyByVehicle };
+async function latestForAllVehicles() {
+  return positionsModel.latestPositionsForAllVehicles();
+}
+
+module.exports = {
+  record,
+  latestByVehicle,
+  historyByVehicle,
+  latestForAllVehicles
+};
 

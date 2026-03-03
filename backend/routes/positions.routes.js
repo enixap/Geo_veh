@@ -48,5 +48,7 @@ router.get(
   positionsController.historyByVehicle
 );
 
+router.get("/latest", positionsController.latestForAll);
+
 module.exports = router;
 

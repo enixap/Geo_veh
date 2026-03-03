@@ -40,5 +40,19 @@ async function historyByVehicle(req, res, next) {
   }
 }
 
-module.exports = { record, latestByVehicle, historyByVehicle };
+async function latestForAll(req, res, next) {
+  try {
+    const positions = await positionsService.latestForAllVehicles();
+    return res.json({ positions });
+  } catch (err) {
+    return next(err);
+  }
+}
+
+module.exports = {
+  record,
+  latestByVehicle,
+  historyByVehicle,
+  latestForAll
+};
 
